@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="">
+            <legend class="">Create Post</legend>
+
+            <div class="">
+                {{ form.caption.label(class="") }}
+
+                {% if form.caption.errors%}
+                    {{ form.caption(class="") }}
+                    <div class="">
+                        {% for error in form.caption.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.caption(class="form-control ") }}
+                {% endif %}
+
+            </div>
+        </fieldset>
+        <div class="">
+            {{ form.submit(class="btn btn-outline-info") }}
+            <small class="">
+                <a href="{{ url_for('login') }}">Sudah punya akun?</a>
+            </small>
+        </div>
+        
+
+    </form>
+</div>
+{% endblock content %}

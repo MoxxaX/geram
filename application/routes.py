@@ -39,7 +39,9 @@ def logout():
 @app.route('/<string:username>')
 @login_required
 def profile(username):
-    return render_template('profile.html', title=f'{current_user.fullname} Profile')
+    posts = current_user.posts
+    return render_template('profile.html', title=f'{current_user.fullname} Profile', posts=posts)
+    
 
 
 @app.route('/', methods=['GET', 'POST'])

@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="">
+<div class="container">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
-        <fieldset class="">
+        <fieldset class="form-group">
             <legend class="">create post</legend>
-            <div class="">
+            <div class="form-group">
                 {{ form.post_pic.label(class="") }}
 
                 {% if form.post_pic.errors%}
@@ -21,7 +21,7 @@
                 {% endif %}
 
             </div>
-            <div class="">
+            <div class="form-group">
                 {{ form.caption.label(class="") }}
 
                 {% if form.caption.errors%}
@@ -39,8 +39,8 @@
         </fieldset>
         <div class="">
             {{ form.submit(class="btn btn-outline-info") }}
-            <small class="">
-                <a href="{{ url_for('login') }}">Sudah punya akun?</a>
+            <small class="form-text text-muted">
+                <a href="{{ url_for('login') }}" style="display: inline-block; padding: 5px 12px; margin-top: 1.2%; margin-right: 61%; background-color: #dbdbdb; color: #ffffff; text-decoration: none; border-radius: 5px; font-size: 20px;" >🔙</a>
             </small>
         </div>
         

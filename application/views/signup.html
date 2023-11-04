@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="">
+<div class="container">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
-        <fieldset class="">
-            <legend class="">Daftar</legend>
+        <fieldset class="form-group">
+            <legend class=""><h2>Signup</h2></legend>
 
-            <div class="">
+            <div class="form-group">
                 {{ form.username.label(class="") }}
 
                 {% if form.username.errors%}

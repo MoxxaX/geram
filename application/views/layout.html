@@ -3,48 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <style>
-        
+
         *{
-          padding: 0px;
-          margin: 0px;
-          box-sizing: border-box;}
-
-        body{
-            padding: 20px;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
         }
 
-        section.content{
-            min-height: calc(100vh - 100px);
-            width: 576px;
-            margin: 0px auto;
+        body {
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
-        header ul li{
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #dbdbdb;
+            padding: 40px;
+            border-radius: 5px;
+            width: 350px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            border: none;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        
+        .form-control {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #dbdbdb;
+            border-radius: 5px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: #3797EF;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #2684ED;
+        }
+
+        .forgot-password {
+            text-align: right;
+            font-size: 14px;
+            color: #3797EF;
+            text-decoration: none;
+            margin-top: 10px;
             display: inline-block;
         }
 
-        div.new-post-box{
-            padding: 5px;
-        }
-
-        div.post-container{
-            border: 1px black solid;
-            margin: 50px auto;
+        .signup-link {
             text-align: center;
-            padding: 5px;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.40);
         }
 
-        img{
-            width: 550 px;
+        .signup-link a {
+            color: #3797EF;
+            text-decoration: none;
         }
 
-        div.pagination-box{
-            border: 1px solid black;
-            text-align: center;
-            padding: 5px;
-            margin-bottom: 30px;
+        .signup-link a:hover {
+            text-decoration: underline;
         }
+
 
     </style>
     {% if title %}

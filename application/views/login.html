@@ -1,51 +1,51 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-	<div class="">
-        <form method="POST" action="">
+	<div class="container">
+        <form method="POST" action="" class="form-signin">
 			{{ form.hidden_tag() }}
-			<fieldset class="">
-				<legend class="">Login</legend>
+			<fieldset class="form-group">
+				<legend class="text-center"><h2>Login</h2></legend>
 
-				<div class="">
-					{{ form.username.label(class="") }}
+				<div class="form-group">
+					{{ form.username.label(class="form-label") }}
 
 					{% if form.username.errors%}
-						{{ form.username(class="") }}
-						<div class="">
+						{{ form.username(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
 							{% for error in form.username.errors %}
-								<span>{{ error }}</span>
+								{{ error }}
 							{% endfor %}
 						</div>
 					{% else %}
-						{{ form.username(class=" ") }}
+						{{ form.username(class="form-control") }}
 					{% endif %}
 
 				</div>
 
-				<div class="">
-					{{ form.password.label(class="") }}
+				<div class="form-group">
+					{{ form.password.label(class="form-label") }}
 
 					{% if form.password.errors%}
-						{{ form.password(class="") }}
-						<div class="">
+						{{ form.password(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
 							{% for error in form.password.errors %}
-								<span>{{ error }}</span>
+								{{ error }}
 							{% endfor %}
 						</div>
 					{% else %}
-						{{ form.password(class=" ") }}
+						{{ form.password(class="form-control") }}
 					{% endif %}
 
 				</div>
 			</fieldset>
-			<div class="">
-				{{ form.submit(class="btn btn-outline-info") }}
-				<small class="">
-					<a href="#">Lupa Kata Sandi?</a>
+			<div class="text-center">
+				{{ form.submit(class="btn btn-primary btn-block") }}
+				<small class="form-text text-muted">
+					<a href="{{ url_for('forgotpassword')}}">Lupa Kata Sandi?</a>
 				</small>
 			</div>
-			<small class="">
+			<small class="form-text text-muted text-center">
 				<a href="{{ url_for('signup') }}">Belum punya akun ?</a>
 			</small>
 

@@ -1,5 +1,93 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ Profile }}</title>
+    <style>
+        body {
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-{% block content %}
-    <h1>Hi - {{ current_user.fullname }}</h1>
-{% endblock content %}
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #dbdbdb;
+            padding: 40px;
+            border-radius: 5px;
+            width: 350px;
+            height: 80vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #3897f0;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 20px;
+            margin-left: 30%;
+        }
+        .profile-details p {
+            margin-bottom: 5px ;
+        }
+        .edit-profile {
+            margin-top: 20px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Profile</h1>
+        <form>
+            {% if current_user.profile_picture %}
+                <div>
+                    <img src="{{ url_for('static', filename='profile_pictures/' + current_user.profile_picture) }}" alt="Profile Picture" style="width:150px; height:150px;">
+                </div>
+            {% else %}
+                <div>
+                    <img src="{{ default_picture_url }}" alt="" style="width:150px; height:150px; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                </div>
+            {% endif %}
+                
+            <div class="profile-details">
+                <p>Username: {{ current_user.username }}</p>
+                <p>Fullname: {{ current_user.fullname }}</p>
+                <p>Email: {{ current_user.email }}</p>
+                <p>Bio: {{ current_user.bio }}</p>
+            </div>
+            <div class="edit-profile">
+                <a href="{{ url_for('editprofile') }}">Edit Profile</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

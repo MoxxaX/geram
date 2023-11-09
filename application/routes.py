@@ -4,6 +4,8 @@ from application import app
 from application.models import *
 from application.forms import *
 from application.utils import save_image
+import os
+import sqlite3
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -31,16 +33,48 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('profile', username=current_user.username))
+
+    form = SignUpForm()  
+
+    if form.validate_on_submit():
+        username = form.username.data
+        fullname = form.fullname.data 
+        email    = form.email.data
+        password = form.password.data
+
+
+
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            flash('Username already exists. Please choose a different username.', 'error')
+        else:
+
+            user = User(username=username, fullname=fullname,email=email, password=password)
+
+            db.session.add(user)
+            db.session.commit()
+
+            login_user(user)
+
+            return redirect(url_for('profile', username=current_user.username))
+
+    return render_template('signup.html', title="Signup", form=form)
+
+
 # @app.route('/profile')
 # @login_required
-# def profile():
+# def perofile():
 #     return render_template('profile.html', title=f'{current_user.fullname} Profile')
 
 @app.route('/<string:username>')
 @login_required
 def profile(username):
-    posts = current_user.posts
-    return render_template('profile.html', title=f'{current_user.fullname} Profile', posts=posts)
+    default_picture_url = "/static/images/profile.png"
+    return render_template('profile.html',default_picture_url=default_picture_url)
     
 
 
@@ -68,20 +102,39 @@ def index():
 
 
 
-@app.route('/signup')
-def signup():
-    form = SignUpForm()
-    return render_template('signup.html', title='SignUp', form=form)
+
 
 @app.route('/forgotpassword')
 def forgotpassword():
     form = ForgotPasswordForm()
     return render_template('forgotpassword.html', title='Forgot Password', form=form)
 
-@app.route('/editprofile')
+
+@app.route('/editprofile', methods=['GET', 'POST'])
+@login_required
 def editprofile():
     form = EditProfileForm()
-    return render_template('editprofile.html', title='Edit Profile', form=form)
+
+    if form.validate_on_submit():
+        user = User.query.get(current_user.id)
+        if form.username.data != user.username:
+            user.username = form.username.data
+        user.fullname = form.fullname.data
+        user.bio = form.bio.data
+
+        if form.profile_pic.data:
+            pass
+
+        db.session.commit()
+        flash('Profile updated', 'success')
+        return redirect(url_for('profile', username=current_user.username))
+    
+    form.username.data = current_user.username
+    form.fullname.data = current_user.fullname
+    form.bio.data = current_user.bio
+    
+    return render_template('editprofile.html', title=f'Edit {current_user.username} Profile', form=form)
+
 
 @app.route('/resetpassword')
 def resetpassword():

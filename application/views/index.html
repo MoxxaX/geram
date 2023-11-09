@@ -28,7 +28,7 @@
     <div class="post-container">
         {% for post in posts %}
             <div class="port" style="border:1px black solid; margin: 10px 0px;">
-                <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image">
+                <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image" style="display: flex; justify-content: center; align-items: center; margin: 0 auto; width: 150px; height: 150px;" >
                 <p>{{ post.caption }}</p>
             </div>
         {% endfor %}

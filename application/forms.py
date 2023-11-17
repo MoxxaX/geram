@@ -50,6 +50,6 @@ class CreatePostForm(FlaskForm):
     caption             = TextAreaField("caption")
     submit              = SubmitField("post")
 
-class EditPostForm(FlaskForm):
+class EditPostForm(SignUpForm):
     caption             = StringField("caption")
     submit              = SubmitField("update post")

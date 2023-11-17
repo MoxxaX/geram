@@ -1,11 +1,12 @@
-from flask import render_template, redirect, url_for, flash,request
+from flask import render_template, redirect, url_for, flash,request, make_response,jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from application import app
 from application.models import *
 from application.forms import *
-from application.utils import save_image
+from application.utils import save_image,save_profile_picture
 import os
 import sqlite3
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -70,12 +71,21 @@ def signup():
 # def perofile():
 #     return render_template('profile.html', title=f'{current_user.fullname} Profile')
 
+# @app.route('/<string:username>')
+# @login_required
+# def profile(username):
+#     default_picture_url = "/static/images/profile.png"
+#     return render_template('profile.html',default_picture_url=default_picture_url)
+
 @app.route('/<string:username>')
 @login_required
 def profile(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    print(f"User Profile Picture Path: {user.profile_pic}")  # Add this line for debugging
+    posts = user.posts
+    reverse_posts = posts[::-1]
     default_picture_url = "/static/images/profile.png"
-    return render_template('profile.html',default_picture_url=default_picture_url)
-    
+    return render_template('profile.html', title=f'{user.fullname} Profile', user=user, posts=reverse_posts, default_picture_url=default_picture_url)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -121,10 +131,11 @@ def editprofile():
             user.username = form.username.data
         user.fullname = form.fullname.data
         user.bio = form.bio.data
-
+        
         if form.profile_pic.data:
-            pass
-
+            if form.profile_pic.validate(form):
+                user.profile_pic = save_profile_picture(form.profile_pic.data)
+    
         db.session.commit()
         flash('Profile updated', 'success')
         return redirect(url_for('profile', username=current_user.username))
@@ -132,14 +143,29 @@ def editprofile():
     form.username.data = current_user.username
     form.fullname.data = current_user.fullname
     form.bio.data = current_user.bio
+    form.profile_pic.data = current_user.profile_pic
     
     return render_template('editprofile.html', title=f'Edit {current_user.username} Profile', form=form)
 
 
-@app.route('/resetpassword')
+@app.route('/resetpassword', methods=['GET', 'POST'])
+@login_required
 def resetpassword():
     form = ResetPasswordForm()
-    return render_template('resetpassword.html', title='Reset Password', form=form)
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(password=form.old_password.data).first()
+
+        if user:
+            user.password = form.new_password.data
+            db.session.commit()
+            flash('password reset successfully!', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash('old password is incorrect!', 'danger')
+
+    return render_template('resetpassword.html', form=form)
+
 
 @app.route('/verificationpassword')
 def verificationpassword():
@@ -174,7 +200,20 @@ def editpost():
 def about():
     return render_template('about.html', title='About')
 
-
-
+@app.route('/like', methods=['GET', 'POST'])
+@login_required
+def like():
+    data = request.json
+    post_id = int(data['postId'])
+    like = Like.query.filter_by(user_id=current_user.id,post_id=post_id).first()
+    if not like:
+        like = Like(user_id=current_user.id, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+        return make_response(jsonify({"status" : True}), 200)
+    
+    db.session.delete(like)
+    db.session.commit()
+    return make_response(jsonify({"status" : False}), 200)
 if __name__ == '__main__':
     app.run(debug=True)

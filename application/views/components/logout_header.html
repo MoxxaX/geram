@@ -1,25 +1,25 @@
-<header>
-    <img src="a" alt="logo">
+<header style="display: flex; justify-content: center; align-items: center;">
+    <img src="{{url_for('static',filename='logo.png')}}" alt="logo" style="width: 180px;">
     <ul>
-        <li>
-            <a href="{{ url_for('about')}}">About</a>
-        </li>
-        <li>
-            <a href="{{ url_for('login')}}">Login</a>
-        </li>
-        <li>
-            <a href="{{ url_for('signup')}}">Signup</a>
-        </li>
+        
+            <a href="{{ url_for('about')}}"></a>
+        
+        
+            <a href="{{ url_for('login')}}"></a>
+        
+        
+            <a href="{{ url_for('signup')}}"></a>
+        
 
-        <li>
-            <a href="{{ url_for('verificationpassword')}}">Verification password</a>
-        </li>
-        <li>
-            <a href="{{ url_for('forgotpassword')}}">Forgot password</a>
-        </li>
-        <li>
-            <a href="{{ url_for('resetpassword')}}">Reset password</a>
-        </li>
+        
+            <a href="{{ url_for('verificationpassword')}}"></a>
+        
+        
+            <a href="{{ url_for('forgotpassword')}}"></a>
+        
+        
+            <a href="{{ url_for('resetpassword')}}"></a>
+        
        
     </ul>
 </header>

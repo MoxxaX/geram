@@ -1,49 +1,76 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="form-box" style="border: 1px black solid;">
-        <h2>Create a New Post</h2>
-        <form method="POST" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            <div class="form-group">
-                {{ form.post_pic.label(class="form-control-label") }}
-                {{ form.post_pic(class="form-control-file") }}
-                {% for error in form.post_pic.errors %}
-                    <span class="text-danger">{{ error }}</span>
-                {% endfor %}
-            </div>
-            <div class="form-group">
-                {{ form.caption.label(class="form-control-label") }}
-                {{ form.caption(class="form-control") }}
-                {% for error in form.post_pic.errors %}
-                    <span class="text-danger">{{ error }}</span>
-                {% endfor %}
-            </div>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-primary") }}
-            </div>
-        </form>
-    </div>
+    <div class="container">
+        <div class="form-box" style="border: 1px black solid;">
+            <h2>Create a New Post</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.post_pic.label(class="form-control-label") }}
+                    {{ form.post_pic(class="form-control-file") }}
+                    {% for error in form.post_pic.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.caption.label(class="form-control-label") }}
+                    {{ form.caption(class="form-control") }}
+                    {% for error in form.post_pic.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
 
-    <div class="post-container">
-        {% for post in posts %}
-            <div class="port" style="border:1px black solid; margin: 10px 0px;">
-                <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image" style="display: flex; justify-content: center; align-items: center; margin: 0 auto; width: 150px; height: 150px;" >
-                <p>{{ post.caption }}</p>
-            </div>
-        {% endfor %}
-    </div>
-    <div class="pagination-box">
-        {% for page_number in posts.iter_pages() %}
-            {% if page_number == posts.page %}
-                <a href="{{ url_for('index', page=page_number) }}" style="color: red; background-color: black;">{{page_number}}</a>
-            {% else %}
-                    <a href="{{ url_for('index',page=page_number)}}" style="color: black;">{{page_number}}</a>
+        <div class="image-container">
+            {% for post in posts %}
+                
+                <div class="post" style="border:1px black solid; margin: 10px 0px; border-radius: 5px;">
+                    <div class="post-header" style="display: flex; gap: 10px    ;">
+                        <a href="{{url_for('profile', username=current_user.username)}}"style="text-decoration: none; color: black; width: 30px; height: 30px" ><img src="{{ url_for('static', filename='images/'+post.posts_owner.profile_pic)}}" alt="Post owner" style=" height: 30px; width: 30px;"></a>
+                        <a href="{{url_for('profile', username=current_user.username)}}" style="text-decoration: none; color: black;"><h2>{{ post.posts_owner.username}}</h2></a>
+                    </div>
+                    <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image" style="display: flex; justify-content: center; align-items: center; margin: 0 auto; width: 150px; height: 150px;" >
+                    <p>{{ post.caption }}</p>   
+
+                    <div class="post-footer">
+                        <span id="likeBtn" data-post-id="{{post.id}}">❤️</span><span id="LikeCounter">{{post.likes|length}}</span>
+                        <span id="commentBtn" data-post-id="{{post.id}}">💬</span><span id="CommentCounter">{{ post.comments | length}}</span>
+                    </div>
+                </div>
+                
+            {% endfor %}
+        </div>
+        <script>
+            document.querySelectorAll("#LikeBtn").forEach(btn => {
+                btn.addEventListener('click', function(){
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'http://127.0.0.1:5000/like', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+                    xhr.onload=function(){
+                        if(xhr.status === 200) {
+                            const respone = JSON.parse(xhr.responseText);
+                            console.log(respone.status);
+                        }
+                    };
+                    const data = JSON.stringify({'postId': this.dataset.postId});
+                    xhr.send(data);
+                })
+            })
+        </script>
+        <div class="pagination-box">
+            {% for page_number in posts.iter_pages() %}
+                {% if page_number == posts.page %}
+                    <a href="{{ url_for('index', page=page_number) }}" style="color: red;">{{page_number}}</a>
+                {% else %}
+                    <a href="{{ url_for('index', page=page_number) }}" style="color: black;">{{page_number}}</a>
                 {% endif %}
             {% endfor %}
-    
         </div>
     </div>
-
-    
 {% endblock content %}

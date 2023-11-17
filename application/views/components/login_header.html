@@ -1,24 +1,24 @@
 <header>
     <img src="a" alt="logo">
     <ul>
-        <li>
-            <a href="{{ url_for('index')}}">Home</a>
-        </li>
-        <li>
-            <a href="{{ url_for('profile', username=current_user.username)}}">Profile</a>
-        </li>
-        <li>
-            <a href="{{ url_for('logout')}}">Logout</a>
+        
+            <a href="{{ url_for('index')}}"></a>
+        
+        
+            <a href="{{ url_for('profile', username=current_user.username)}}"></a>
+        
+        
+            <a href="{{ url_for('logout')}}"></a>
             
-        </li>
-        <li>
-            <a href="{{ url_for('editprofile')}}">Edit profile</a>
-        </li>
-        <li>
-            <a href="{{ url_for('createpost')}}">Create Post</a>
-        </li>
-        <li>
-            <a href="{{ url_for('editpost')}}">Edit Post</a>
-        </li>
+        
+        
+            <a href="{{ url_for('editprofile')}}"></a>
+        
+        
+            <a href="{{ url_for('createpost')}}"></a>
+        
+        
+            <a href="{{ url_for('editpost')}}"></a>
+        
     </ul>
 </header>

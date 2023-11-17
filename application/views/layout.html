@@ -93,8 +93,22 @@
         .signup-link a:hover {
             text-decoration: underline;
         }
+        
+        .post {
+            /* background-color: cyan; */
+            margin: 5px 10px;
+            padding: 0px 15px;
+        }
 
+        .post-header, .post-footer {
+            display: flex;
+            gap: 10px;
+        }
 
+        .post-header img {
+            border-radius: 50%;
+        }
+        
     </style>
     {% if title %}
         <title>{{ title }} - Website</title>

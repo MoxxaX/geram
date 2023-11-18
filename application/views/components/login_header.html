@@ -1,24 +1,3 @@
-<header>
-    <img src="a" alt="logo">
-    <ul>
-        
-            <a href="{{ url_for('index')}}"></a>
-        
-        
-            <a href="{{ url_for('profile', username=current_user.username)}}"></a>
-        
-        
-            <a href="{{ url_for('logout')}}"></a>
-            
-        
-        
-            <a href="{{ url_for('editprofile')}}"></a>
-        
-        
-            <a href="{{ url_for('createpost')}}"></a>
-        
-        
-            <a href="{{ url_for('editpost')}}"></a>
-        
-    </ul>
+<header style="display: flex; justify-content: center; align-items: center;">
+    <img src="{{url_for('static',filename='logo.png')}}" alt="logo" style="width: 180px;">
 </header>

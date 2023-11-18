@@ -41,15 +41,15 @@ class ForgotPasswordForm(FlaskForm):
     submit              = SubmitField("send link verification to email")
 
 class VerificationResetPasswordForm(FlaskForm):
-    password = PasswordField("new password", validators=[DataRequired(), Length(min=8)])
-    confirm_password = PasswordField("confirm new password", validators=[DataRequired(), Length(min=8), EqualTo("password")])
-    submit = SubmitField("Reset password")
+    password            = PasswordField("new password", validators=[DataRequired(), Length(min=8)])
+    confirm_password    = PasswordField("confirm new password", validators=[DataRequired(), Length(min=8), EqualTo("password")])
+    submit              = SubmitField("Reset password")
 
 class CreatePostForm(FlaskForm):
     post_pic            = FileField("picture", validators=[DataRequired(), FileAllowed(["jpg", "png", "jpeg"])])
     caption             = TextAreaField("caption")
     submit              = SubmitField("post")
 
-class EditPostForm(SignUpForm):
+class EditPostForm(FlaskForm):
     caption             = StringField("caption")
     submit              = SubmitField("update post")

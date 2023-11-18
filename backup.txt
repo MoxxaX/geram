@@ -1,0 +1,22 @@
+'''
+@app.route('/editpost/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def editpost(post_id):
+    post = Post.query.get_or_404(post_id)
+
+    # Check if the current user is the author of the post
+    if current_user != post.author:
+        flash('You do not have permission to edit this post.', 'danger')
+        return redirect(url_for('index'))
+
+    form = CreatePostForm(obj=post)
+
+    if form.validate_on_submit():
+        form.populate_obj(post)
+        post.photo = save_image(form.post_pic.data)  # Update the photo if a new image is provided
+        db.session.commit()
+        flash('Your post has been updated ❤️', 'success')
+        return redirect(url_for('index'))
+
+    return render_template('editpost.html', title='Edit Post', form=form, post=post)
+'''

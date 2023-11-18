@@ -1,274 +1,154 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ Profile }}</title>
-    <style>
-        body {
-            background-color: #fafafa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background-color: #ffffff;
-            border: 1px solid #dbdbdb;
-            padding: 40px;
-            border-radius: 5px;
-            width: 350px;
-            height: 80vh;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #3897f0;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-        }
-        .profile-details {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin-top: 20px;
-            margin-left: 30%;
-        }
-        .profile-details p {
-            margin-bottom: 5px ;
-        }
-        .edit-profile {
-            margin-top: 20px;
-        }
-
-        
-        .image-container {
-            display: flex;
-            flex-wrap: wrap;
-            max-width: 900px;
-            justify-content: flex-start;
-            align-items: center;
-        }
-    </style>
-    
-</head>
-<body>
-    <div class="container">
-        <h1>Profile</h1>
-        <form>
-            {% if current_user.profile_picture %}
-                <div>
-                    <img src="{{ url_for('static', filename='profile_pictures/' + current_user.profile_picture) }}" alt="Profile Picture" style="width:150px; height:150px;">
-                </div>
-            {% else %}
-                <div>
-                    <img src="{{ default_picture_url }}" alt="" style="width:150px; height:150px; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                </div>
-            {% endif %}
-                
-            <div class="profile-details">
-                <p>Username: {{ current_user.username }}</p>
-                <p>Fullname: {{ current_user.fullname }}</p>
-                <p>Email: {{ current_user.email }}</p>
-                <p>Bio: {{ current_user.bio }}</p>
-            </div>
-
-            <div class="image-container">
-                {% for post in posts %}
-                <div class="image-item"><img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image"></div>
-                {% endfor %}
-            </div>
-            
-            <div class="edit-profile">
-                <a href="{{ url_for('editprofile') }}">Edit Profile</a>
-            </div>
-
-            
-        </form>
-        
-    </div>
-    
-</body>
-</html> -->
-
 <style>
-        * {
-            padding: 0px;
-            margin: 0px;
-            box-sizing: border-box;
-        }
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
 
-        body {
-            padding: 20px;
-        }
+    body {
+        background-color: #fafafa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
 
-        section.content {
-            min-height: calc(100vh - 100px);
-            width: 576px;
-            margin: 0px auto;
-        }
+    .section-content {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+        width: 690px;
+        height: 100%;
+    }
 
-        header ul li {
-            display: inline-block;
-        }
+    .image-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+        padding: 16px;
+        justify-content: space-evenly;
+        max-width: 100%;
+        width: 100%;
+    }
 
-        div.new-post-box {
-            padding: 5px;
-        }
+    .image-item {
+        position: relative;
+        overflow: hidden;
 
-        div.post-container {
-            border: 1px solid black;
-            margin: 50px auto;
-            /* text-align: center; */
-            padding: 5px;
-        }
+    }
 
-        img {
-            width: 500px;
-        }
-
-        div.pagination-box {
-            border: 1px solid black;
-            text-align: center;
-            padding: 5px;
-            margin-bottom: 30px;
-        }
-
-        .image-container {
-            display: flex;
-            flex-wrap: wrap;
-            max-width: 900px;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        .image-item {
-            flex: 0 0 calc(33.33% - 20px); /* Adjust the width and margin as needed */
-            margin: 10px;
-            box-sizing: border-box;
-            overflow: hidden;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .image-item img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .profile-card {
-            border: 1px solid black;
-            background-color:rgb(241, 233, 233);
-            display: flex;
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-            margin: 20px 0px;
-        }
+    .image-item img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .profile-card {
+        border: 1px solid black;
+        background-color:rgb(241, 233, 233);
+        display: flex;
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+        margin: 20px 0px;
+        border-radius: 15px;
+    }
 
 
 
-        .profile-photo img {
-            max-width: 100%;
-            height: auto;
-        }
+    .profile-photo img {
+        max-width: 100%;
+        height: auto;
+    }
 
-        .profile-info {
-            margin-left: 20px;
-            text-align: left;
-        }
+    .profile-info {
+        margin-left: 20px;
+        text-align: left;
+    }
 
-        .profile-info h2 {
-            margin: 0;
-        }
+    .profile-info h2 {
+        margin: 0;
+    }
 
-        .profile-info p {
-            margin: 5px 0;
-        }
+    .profile-info p {
+        margin: 5px 10px 5px 0;
+        display: inline-block;
+        border: 2px black solid;
+        border-radius: 5px;
+        background-color: #ffffff;
 
-        .post {
-            /* background-color: cyan; */
-            margin: 5px 10px;
-            padding: 0px 15px;
-        }
+    }
 
-        .post-header, .post-footer {
-            display: flex;
-            gap: 10px;
-        }
+    .profile-info a {
+        margin-top: 5px;
+        display: block;
+        font-size: 16px;
+    }
 
-        .post-header img {
-            border-radius: 50%;
-        }
-        .btn {
-            display: block;
-            width: 69%;
-            height: 18px;
-            line-height: 18px;
-            text-align: center;
-            background-color: #3797EF;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            text-decoration: none;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    .btn {
+        display: block;
+        width: 100%;
+        height: 18px;
+        line-height: 18px;
+        text-align: center;
+        background-color: rgb(255, 255, 255);
+        color: #000000;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        text-decoration: none;
+        cursor: pointer;
+        margin-top: 10px;
+        border: 1px  black solid;
+        
+    }
 
-        .btn:hover {
-            background-color: #2684ED;
-        }
+    .btn:hover {
+        background-color:cadetblue;
+        color: #ffffff;
+    }
+
 </style>
 
+
 {% block content %}
-    <div class="profile-card">
-            {% if current_user.profile_pic %}
-                <div class="profile-photo" style="border: 1px black solid; border-radius: 50%;">
-                    <img src="{{ url_for('static', filename=current_user.profile_pic) }}" alt="Profile pic" style="width:150px; height:150px; display: flex; align-items: center; justify-content: center; margin: 0 auto; border-radius: 50%; background-color: white;">
-                </div>
-            {% else %}
-                <div class="profile-photo" style="border: 1px black solid; border-radius: 50%;">
-                    <img src="{{ default_picture_url }}" alt="default pic" style="width:150px; height:150px; display: flex; align-items: center; justify-content: center; margin: 0 auto; border-radius: 50%; background-color: white;">
-                </div>
-            {% endif %} 
-        <div class="profile-info">
-            <h2>{{current_user.fullname}}</h2>
-            <p>{{ current_user.bio }}</p>
-            <p>Following: {{ current_user.following_users|length }}</p>
-            <p>Follower: {{ current_user.follower_users|length }}</p>
-            <a class="btn btn-primary" href="{{ url_for('editprofile') }}">Edit</a>
-            <a class="btn btn-primary" href="{{url_for('index')}}">Post</a>
-            
-
+    <div class="section-content">
+        {% if current_user.is_authenticated %}
+            {% include "components/login_header.html" %}
+        {% else %}
+            {% include "components/logout_header.html" %}
+        {% endif %}
+        <a class="" href="{{url_for('index')}}" style="text-decoration: none; color: #3797EF; font-size: 24px;" >🏠Home</a>
+        <a class="" href="{{url_for('logout')}}" style="text-decoration: none; color: #3797EF; font-size: 24px; padding-left: 480px;" >Logout</a>
+        
+        <div class="profile-card">
+                {% if current_user.profile_pic %}
+                    <div class="profile-photo" style="border: 1px black solid; border-radius: 50%;">
+                        <img src="{{ url_for('static', filename=current_user.profile_pic) }}" alt="Profile pic" style="width:150px; height:150px; display: flex; align-items: center; justify-content: center; margin: 0 auto; border-radius: 50%; background-color: white;">
+                    </div>
+                {% else %}
+                    <div class="profile-photo" style="border: 1px black solid; border-radius: 50%;">
+                        <img src="{{ default_picture_url }}" alt="default pic" style="width:150px; height:150px; display: flex; align-items: center; justify-content: center; margin: 0 auto; border-radius: 50%; background-color: white;">
+                    </div>
+                {% endif %} 
+            <div class="profile-info">
+                <h2>{{current_user.fullname}}</h2>
+                <p>bio:{{ current_user.bio }}</p>
+                <p>Following: {{ current_user.following_users|length }}</p>
+                <p>Follower: {{ current_user.follower_users|length }}</p>
+                <a class="btn btn-primary" href="{{ url_for('editprofile') }}">Edit Profile</a>
+                <a class="btn btn-primary" href="{{ url_for('resetpassword') }}">Change Password</a>
+                <a class="btn btn-primary" href="{{ url_for('index') }}">Create a post</a>
+            </div>
         </div>
-    </div>
 
-    <div class="image-container">
-        {% for post in posts %}
-        <div class="image-item"><img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image"></div>
-        {% endfor %}
+        <div class="image-container">
+            {% for post in posts %}
+            <div class="image-item"><img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image"></div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}

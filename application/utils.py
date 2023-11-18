@@ -37,9 +37,9 @@ def load_user(user_id):
 #END OF LOGIN MANAGER UTILS
 
 def save_image(form_picture_data):
-    random_hex = secrets.token_hex(5)
-    _, f_ext = os.path.splitext(form_picture_data.filename) #f_ext = file extension,underscore dipake ketika variabel yang ingin dipake bingung
-    picture_fn = 'images/posts/'+random_hex+f_ext
+    random_hex   = secrets.token_hex(5)
+    _, f_ext     = os.path.splitext(form_picture_data.filename) #f_ext = file extension,underscore dipake ketika variabel yang ingin dipake bingung
+    picture_fn   = 'images/posts/'+random_hex+f_ext
     picture_path = os.path.join(current_app.root_path, 'static/', picture_fn)
 
     image = Image.open(form_picture_data)
@@ -52,12 +52,12 @@ def save_image(form_picture_data):
     return picture_fn
 
 def save_profile_picture(form_picture_data):
-    random_hex = secrets.token_hex(5)
-    _, f_ext = os.path.splitext(form_picture_data.filename)
-    picture_fn = 'uploads/profilepic/'+random_hex+f_ext
+    random_hex   = secrets.token_hex(5)
+    _, f_ext     = os.path.splitext(form_picture_data.filename)
+    picture_fn   = 'uploads/profilepic/'+random_hex+f_ext
     picture_path = os.path.join(current_app.root_path, 'static/', picture_fn)
 
-    image = Image.open(form_picture_data)
+    image        = Image.open(form_picture_data)
 
     image.save(picture_path)
     

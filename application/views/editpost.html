@@ -5,7 +5,7 @@
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="">Create Post</legend>
+            <legend class="">Edit Post</legend>
 
             <div class="form-group">
                 {{ form.caption.label(class="") }}
@@ -26,7 +26,6 @@
         <div class="">
             {{ form.submit(class="btn btn-outline-info") }}
             <small class="">
-                <a href="{{ url_for('login') }}">Sudah punya akun?</a>
             </small>
         </div>
         

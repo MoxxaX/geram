@@ -191,10 +191,21 @@ def createpost():
     return render_template('index.html', title='Home', form=form, posts=posts)
 
 
-@app.route('/editpost')
-def editpost():
+@app.route('/editpost/<int:post_id>', methods=['GET', 'POST'])
+def editpost(post_id):
     form = EditPostForm()
-    return render_template('editpost.html', title='Edit Post', form=form)
+
+    post = Post.query.get(post_id)
+    if form.validate_on_submit():
+        post.caption = form.caption.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('index', username=current_user.username))
+
+    elif request.method == 'GET':
+        form.caption.data = post.caption
+
+    return render_template('editpost.html', title='Edit Post', form=form, post=post)
 
 @app.route('/about')
 def about():
